@@ -23,7 +23,7 @@ const mockAziende = [
 const mockConfig = {
   countdown_end: new Date(Date.now() + 4 * 60 * 60 * 1000).toISOString(), // 4 ore da ora
   voting_open: true,
-  event_name: 'Evoluzione 2026',
+  event_name: 'EVOluzione',
 };
 
 // ============================================================================
@@ -125,13 +125,15 @@ const styles = `
   @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Outfit:wght@300;400;500;600&display=swap');
   
   :root {
-    --burgundy: #722F37;
-    --burgundy-dark: #5a252c;
-    --gold: #C9A962;
-    --gold-light: #e8d9a8;
+    --olive: #7A8231;
+    --olive-dark: #5A6024;
+    --bronze: #A68A2C;
+    --mustard: #C9B535;
+    --lime: #E0D654;
+    --sage: #C5C9B0;
     --cream: #FAF8F5;
     --charcoal: #2C2C2C;
-    --silver: #A8A8A8;
+    --silver: #6B6B6B;
   }
   
   * {
@@ -164,27 +166,17 @@ const styles = `
     text-align: center;
     padding: 30px 0;
   }
-  
-  .voting-header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    color: var(--burgundy);
-    letter-spacing: 2px;
-  }
-  
-  .voting-header .year {
-    font-size: 1rem;
-    color: var(--gold);
-    font-weight: 600;
-    letter-spacing: 4px;
-    margin-top: 5px;
+
+  .voting-header .logo {
+    max-width: 280px;
+    height: auto;
   }
   
   .voting-card {
     background: white;
     border-radius: 20px;
     padding: 30px;
-    box-shadow: 0 10px 40px rgba(114, 47, 55, 0.1);
+    box-shadow: 0 10px 40px rgba(122, 130, 49, 0.1);
     margin-bottom: 20px;
   }
   
@@ -199,23 +191,23 @@ const styles = `
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: var(--gold-light);
+    background: var(--sage);
     transition: all 0.3s;
   }
   
   .step-dot.active {
-    background: var(--burgundy);
+    background: var(--olive);
     transform: scale(1.3);
   }
   
   .step-dot.completed {
-    background: var(--gold);
+    background: var(--mustard);
   }
   
   .step-title {
     font-family: 'Playfair Display', serif;
     font-size: 1.5rem;
-    color: var(--burgundy);
+    color: var(--olive);
     text-align: center;
     margin-bottom: 10px;
   }
@@ -236,7 +228,7 @@ const styles = `
   
   .category-btn {
     padding: 25px;
-    border: 2px solid var(--gold-light);
+    border: 2px solid var(--sage);
     border-radius: 15px;
     background: white;
     cursor: pointer;
@@ -245,14 +237,14 @@ const styles = `
   }
   
   .category-btn:hover {
-    border-color: var(--burgundy);
+    border-color: var(--olive);
     transform: translateY(-2px);
-    box-shadow: 0 5px 20px rgba(114, 47, 55, 0.15);
+    box-shadow: 0 5px 20px rgba(122, 130, 49, 0.15);
   }
   
   .category-btn.selected {
-    border-color: var(--burgundy);
-    background: linear-gradient(135deg, var(--burgundy) 0%, var(--burgundy-dark) 100%);
+    border-color: var(--olive);
+    background: linear-gradient(135deg, var(--olive) 0%, var(--olive-dark) 100%);
     color: white;
   }
   
@@ -276,7 +268,7 @@ const styles = `
   .email-input {
     width: 100%;
     padding: 18px 20px;
-    border: 2px solid var(--gold-light);
+    border: 2px solid var(--sage);
     border-radius: 12px;
     font-size: 1rem;
     font-family: 'Outfit', sans-serif;
@@ -285,8 +277,8 @@ const styles = `
   }
   
   .email-input:focus {
-    border-color: var(--burgundy);
-    box-shadow: 0 0 0 4px rgba(114, 47, 55, 0.1);
+    border-color: var(--olive);
+    box-shadow: 0 0 0 4px rgba(122, 130, 49, 0.1);
   }
   
   .email-input.error {
@@ -313,7 +305,7 @@ const styles = `
     display: flex;
     align-items: center;
     padding: 15px;
-    border: 2px solid var(--gold-light);
+    border: 2px solid var(--sage);
     border-radius: 12px;
     cursor: pointer;
     transition: all 0.3s;
@@ -321,12 +313,12 @@ const styles = `
   }
   
   .company-item:hover {
-    border-color: var(--gold);
+    border-color: var(--mustard);
     transform: translateX(5px);
   }
   
   .company-item.selected-1 {
-    border-color: var(--gold);
+    border-color: var(--mustard);
     background: linear-gradient(135deg, #fff9e6 0%, #fff 100%);
   }
   
@@ -349,7 +341,7 @@ const styles = `
     align-items: center;
     justify-content: center;
     font-weight: 600;
-    color: var(--burgundy);
+    color: var(--olive);
     margin-right: 15px;
     flex-shrink: 0;
   }
@@ -371,7 +363,7 @@ const styles = `
   }
   
   .badge-1 {
-    background: linear-gradient(135deg, var(--gold) 0%, #b8963a 100%);
+    background: linear-gradient(135deg, var(--mustard) 0%, #b8963a 100%);
     color: white;
   }
   
@@ -420,7 +412,7 @@ const styles = `
   .btn-primary {
     width: 100%;
     padding: 18px;
-    background: linear-gradient(135deg, var(--burgundy) 0%, var(--burgundy-dark) 100%);
+    background: linear-gradient(135deg, var(--olive) 0%, var(--olive-dark) 100%);
     color: white;
     border: none;
     border-radius: 12px;
@@ -434,7 +426,7 @@ const styles = `
   
   .btn-primary:hover:not(:disabled) {
     transform: translateY(-2px);
-    box-shadow: 0 10px 30px rgba(114, 47, 55, 0.3);
+    box-shadow: 0 10px 30px rgba(122, 130, 49, 0.3);
   }
   
   .btn-primary:disabled {
@@ -446,8 +438,8 @@ const styles = `
     width: 100%;
     padding: 15px;
     background: transparent;
-    color: var(--burgundy);
-    border: 2px solid var(--burgundy);
+    color: var(--olive);
+    border: 2px solid var(--olive);
     border-radius: 12px;
     font-size: 1rem;
     font-weight: 500;
@@ -458,7 +450,7 @@ const styles = `
   }
   
   .btn-secondary:hover {
-    background: var(--burgundy);
+    background: var(--olive);
     color: white;
   }
   
@@ -476,7 +468,7 @@ const styles = `
   .thank-you h2 {
     font-family: 'Playfair Display', serif;
     font-size: 2rem;
-    color: var(--burgundy);
+    color: var(--olive);
     margin-bottom: 15px;
   }
   
@@ -498,20 +490,19 @@ const styles = `
     text-align: center;
     margin-bottom: 40px;
   }
-  
-  .dashboard-header h1 {
-    font-family: 'Playfair Display', serif;
-    font-size: 4rem;
-    color: var(--gold);
-    letter-spacing: 4px;
-    text-shadow: 0 4px 20px rgba(201, 169, 98, 0.3);
+
+  .dashboard-header .logo {
+    max-width: 400px;
+    height: auto;
+    margin-bottom: 15px;
   }
-  
+
   .dashboard-header .subtitle {
     font-size: 1.2rem;
-    color: var(--silver);
+    color: var(--sage);
     margin-top: 10px;
     letter-spacing: 2px;
+    text-transform: uppercase;
   }
   
   .countdown-container {
@@ -522,10 +513,10 @@ const styles = `
   .countdown {
     display: inline-flex;
     gap: 20px;
-    background: rgba(201, 169, 98, 0.1);
+    background: rgba(201, 181, 53, 0.1);
     padding: 25px 50px;
     border-radius: 20px;
-    border: 1px solid rgba(201, 169, 98, 0.3);
+    border: 1px solid rgba(201, 181, 53, 0.3);
   }
   
   .countdown-unit {
@@ -535,7 +526,7 @@ const styles = `
   .countdown-value {
     font-family: 'Playfair Display', serif;
     font-size: 4rem;
-    color: var(--gold);
+    color: var(--mustard);
     line-height: 1;
   }
   
@@ -549,7 +540,7 @@ const styles = `
   
   .countdown-separator {
     font-size: 3rem;
-    color: var(--gold);
+    color: var(--mustard);
     opacity: 0.5;
     align-self: flex-start;
     padding-top: 10px;
@@ -567,13 +558,13 @@ const styles = `
     background: rgba(255, 255, 255, 0.03);
     border-radius: 25px;
     padding: 30px;
-    border: 1px solid rgba(201, 169, 98, 0.2);
+    border: 1px solid rgba(201, 181, 53, 0.2);
   }
   
   .ranking-title {
     font-family: 'Playfair Display', serif;
     font-size: 1.8rem;
-    color: var(--gold);
+    color: var(--mustard);
     text-align: center;
     margin-bottom: 25px;
     display: flex;
@@ -602,13 +593,13 @@ const styles = `
   }
   
   .ranking-item:hover {
-    background: rgba(201, 169, 98, 0.1);
+    background: rgba(201, 181, 53, 0.1);
     transform: translateX(10px);
   }
   
   .ranking-item.top-1 {
-    background: linear-gradient(135deg, rgba(201, 169, 98, 0.3) 0%, rgba(201, 169, 98, 0.1) 100%);
-    border: 1px solid var(--gold);
+    background: linear-gradient(135deg, rgba(201, 181, 53, 0.3) 0%, rgba(201, 181, 53, 0.1) 100%);
+    border: 1px solid var(--mustard);
   }
   
   .ranking-item.top-2 {
@@ -626,10 +617,10 @@ const styles = `
     font-size: 1.8rem;
     width: 50px;
     text-align: center;
-    color: var(--gold);
+    color: var(--mustard);
   }
   
-  .ranking-item.top-1 .ranking-position { color: var(--gold); }
+  .ranking-item.top-1 .ranking-position { color: var(--mustard); }
   .ranking-item.top-2 .ranking-position { color: #C0C0C0; }
   .ranking-item.top-3 .ranking-position { color: #CD7F32; }
   
@@ -652,7 +643,7 @@ const styles = `
   .voting-closed h2 {
     font-family: 'Playfair Display', serif;
     font-size: 3rem;
-    color: var(--gold);
+    color: var(--mustard);
     margin-bottom: 20px;
   }
   
@@ -670,13 +661,13 @@ const styles = `
     align-items: center;
     margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 2px solid var(--gold-light);
+    border-bottom: 2px solid var(--sage);
   }
   
   .admin-header h1 {
     font-family: 'Playfair Display', serif;
     font-size: 2rem;
-    color: var(--burgundy);
+    color: var(--olive);
   }
   
   .admin-nav {
@@ -686,9 +677,9 @@ const styles = `
   
   .admin-nav button {
     padding: 10px 20px;
-    border: 2px solid var(--burgundy);
+    border: 2px solid var(--olive);
     background: white;
-    color: var(--burgundy);
+    color: var(--olive);
     border-radius: 8px;
     cursor: pointer;
     font-weight: 500;
@@ -697,7 +688,7 @@ const styles = `
   
   .admin-nav button.active,
   .admin-nav button:hover {
-    background: var(--burgundy);
+    background: var(--olive);
     color: white;
   }
   
@@ -711,7 +702,7 @@ const styles = `
   
   .admin-section h2 {
     font-family: 'Playfair Display', serif;
-    color: var(--burgundy);
+    color: var(--olive);
     margin-bottom: 20px;
     font-size: 1.3rem;
   }
@@ -730,7 +721,7 @@ const styles = `
   .form-input {
     width: 100%;
     padding: 12px 15px;
-    border: 2px solid var(--gold-light);
+    border: 2px solid var(--sage);
     border-radius: 8px;
     font-size: 1rem;
     font-family: 'Outfit', sans-serif;
@@ -739,7 +730,7 @@ const styles = `
   
   .form-input:focus {
     outline: none;
-    border-color: var(--burgundy);
+    border-color: var(--olive);
   }
   
   .company-admin-list {
@@ -772,7 +763,7 @@ const styles = `
   }
   
   .btn-edit {
-    background: var(--gold);
+    background: var(--mustard);
     color: white;
   }
   
@@ -797,7 +788,7 @@ const styles = `
   .stat-value {
     font-family: 'Playfair Display', serif;
     font-size: 3rem;
-    color: var(--burgundy);
+    color: var(--olive);
   }
   
   .stat-label {
@@ -833,7 +824,7 @@ const styles = `
   }
   
   .nav-btn.active {
-    background: var(--burgundy);
+    background: var(--olive);
     color: white;
   }
   
@@ -843,8 +834,8 @@ const styles = `
       padding: 20px;
     }
     
-    .dashboard-header h1 {
-      font-size: 2.5rem;
+    .dashboard-header .logo {
+      max-width: 280px;
     }
     
     .countdown {
@@ -957,8 +948,7 @@ function VotingApp({ aziende, config }) {
     return (
       <div className="voting-app">
         <div className="voting-header">
-          <h1>EVOLUZIONE</h1>
-          <div className="year">2026</div>
+          <img src="/EVOluzione_logo.png" alt="EVOluzione" className="logo" />
         </div>
         <div className="voting-card">
           <div className="thank-you">
@@ -975,8 +965,7 @@ function VotingApp({ aziende, config }) {
     return (
       <div className="voting-app">
         <div className="voting-header">
-          <h1>EVOLUZIONE</h1>
-          <div className="year">2026</div>
+          <img src="/EVOluzione_logo.png" alt="EVOluzione" className="logo" />
         </div>
         <div className="voting-card animate-in">
           <div className="thank-you">
@@ -992,8 +981,7 @@ function VotingApp({ aziende, config }) {
   return (
     <div className="voting-app">
       <div className="voting-header">
-        <h1>EVOLUZIONE</h1>
-        <div className="year">2026</div>
+        <img src="/EVOluzione_logo.png" alt="EVOluzione" className="logo" />
       </div>
 
       <div className="step-indicator">
@@ -1121,12 +1109,12 @@ function VotingApp({ aziende, config }) {
             
             <div style={{ background: 'var(--cream)', borderRadius: 12, padding: 20, marginBottom: 20 }}>
               <p style={{ fontSize: '0.9rem', color: 'var(--silver)', marginBottom: 10 }}>
-                Categoria: <strong style={{ color: 'var(--burgundy)' }}>
+                Categoria: <strong style={{ color: 'var(--olive)' }}>
                   {categoria === 'horeca' ? 'Operatore Ho.Re.Ca.' : 'Appassionato'}
                 </strong>
               </p>
               <p style={{ fontSize: '0.9rem', color: 'var(--silver)', marginBottom: 15 }}>
-                Email: <strong style={{ color: 'var(--burgundy)' }}>{email}</strong>
+                Email: <strong style={{ color: 'var(--olive)' }}>{email}</strong>
               </p>
               
               {selections.map((sel, idx) => sel && (
@@ -1239,8 +1227,8 @@ function Dashboard({ config }) {
     return (
       <div className="dashboard">
         <div className="dashboard-header">
-          <h1>{config?.event_name || 'EVOLUZIONE'}</h1>
-          <div className="subtitle">VOTAZIONI CONCLUSE</div>
+          <img src="/EVOluzione_logo_verde.png" alt="EVOluzione" className="logo" />
+          <div className="subtitle">Votazioni Concluse</div>
         </div>
         
         <div className="voting-closed">
@@ -1281,8 +1269,8 @@ function Dashboard({ config }) {
   return (
     <div className="dashboard">
       <div className="dashboard-header">
-        <h1>{config?.event_name || 'EVOLUZIONE'}</h1>
-        <div className="subtitle">VOTA LA TUA AZIENDA PREFERITA</div>
+        <img src="/EVOluzione_logo_verde.png" alt="EVOluzione" className="logo" />
+        <div className="subtitle">Vota il tuo artista preferito</div>
       </div>
       
       <div className="countdown-container">
@@ -1583,7 +1571,7 @@ export default function App() {
         background: 'var(--cream)',
         fontFamily: 'Playfair Display, serif',
         fontSize: '1.5rem',
-        color: 'var(--burgundy)'
+        color: 'var(--olive)'
       }}>
         Caricamento...
       </div>
