@@ -977,27 +977,161 @@ const styles = `
   @media (max-width: 768px) {
     .classifica {
       padding: 20px;
+      padding-bottom: 150px;
     }
-    
+
     .classifica-header .logo {
       max-width: 280px;
     }
-    
+
     .countdown {
       padding: 15px 25px;
       gap: 15px;
     }
-    
+
     .countdown-value {
       font-size: 2.5rem;
     }
-    
+
     .rankings-container {
       grid-template-columns: 1fr;
       gap: 20px;
     }
+
+    /* Admin Header - stack vertical forzato */
+    .admin-header {
+      flex-direction: column !important;
+      align-items: stretch !important;
+      justify-content: flex-start !important;
+      gap: 15px;
+    }
+
+    .admin-header h1 {
+      font-size: 1.5rem;
+      text-align: center;
+      width: 100%;
+    }
+
+    /* Admin Nav Tabs - wrapping completo */
+    .admin-nav {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .admin-nav button {
+      flex: 1 1 auto;
+      min-width: 100px;
+      text-align: center;
+      padding: 10px 15px;
+      font-size: 0.9rem;
+    }
+
+    /* Admin Panel responsive */
+    .admin-panel {
+      padding: 15px;
+      padding-bottom: 150px;
+    }
+
+    .admin-section {
+      padding: 15px;
+    }
+
+    /* Form Aggiungi Azienda - stack verticale */
+    .admin-section > div[style*="display: flex"] {
+      flex-direction: column !important;
+    }
+
+    .admin-section > div[style*="display: flex"] input {
+      width: 100% !important;
+    }
+
+    .admin-section > div[style*="display: flex"] .btn-primary {
+      width: 100% !important;
+      margin-top: 10px;
+    }
+
+    /* Company Admin Item - layout verticale su mobile */
+    .company-admin-item {
+      flex-wrap: wrap;
+      gap: 10px;
+      position: relative;
+    }
+
+    .company-admin-item > span:first-child {
+      position: absolute;
+      left: 15px;
+      top: 15px;
+    }
+
+    .company-admin-item .name {
+      flex: 1 1 100%;
+      margin-bottom: 8px;
+      padding-left: 35px;
+    }
+
+    .company-admin-item button {
+      flex: 1;
+      min-width: 80px;
+      padding: 10px 15px;
+      font-size: 0.9rem;
+    }
+
+    /* Voting App padding */
+    .voting-app {
+      padding-bottom: 150px;
+    }
   }
-  
+
+  /* Small mobile (iPhone SE, etc.) */
+  @media (max-width: 480px) {
+    .admin-header h1 {
+      font-size: 1.3rem;
+    }
+
+    .admin-nav button {
+      padding: 8px 12px;
+      font-size: 0.8rem;
+      min-width: 90px;
+    }
+
+    .app-nav {
+      bottom: 45px;
+      padding: 8px 10px;
+      gap: 5px;
+    }
+
+    .nav-btn {
+      padding: 8px 12px;
+      font-size: 0.8rem;
+    }
+
+    .app-footer {
+      padding: 8px 10px;
+      font-size: 0.7rem;
+    }
+
+    .countdown {
+      padding: 12px 15px;
+      gap: 10px;
+    }
+
+    .countdown-value {
+      font-size: 2rem;
+    }
+
+    .countdown-label {
+      font-size: 0.75rem;
+    }
+
+    .company-admin-item button {
+      padding: 8px 12px;
+      font-size: 0.8rem;
+    }
+  }
+
   /* Animations */
   @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
