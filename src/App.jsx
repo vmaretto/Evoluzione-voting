@@ -134,6 +134,19 @@ const supabase = {
           headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
         });
         return { error: null };
+      },
+      neq: async (col, val) => {
+        if (MOCK_MODE) {
+          console.log('Mock delete all:', table);
+          // In mock mode svuotiamo l'array mockVoti
+          mockVoti.length = 0;
+          return { error: null };
+        }
+        await fetch(`${SUPABASE_URL}/rest/v1/${table}?${col}=neq.${val}`, {
+          method: 'DELETE',
+          headers: { apikey: SUPABASE_ANON_KEY, Authorization: `Bearer ${SUPABASE_ANON_KEY}` }
+        });
+        return { error: null };
       }
     }),
   }),
@@ -1411,6 +1424,47 @@ function AdminPanel({ aziende, setAziende, config, setConfig }) {
   const [editingName, setEditingName] = useState('');
   const [stats, setStats] = useState({ totale: 0, horeca: 0, appassionati: 0 });
 
+  // Funzioni helper per formattare data/ora
+  const formatDateForInput = (isoString) => {
+    if (!isoString) return '';
+    const date = new Date(isoString);
+    const day = date.getDate().toString().padStart(2, '0');
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const year = date.getFullYear();
+    return `${day}/${month}/${year}`;
+  };
+
+  const formatTimeForInput = (isoString) => {
+    if (!isoString) return '';
+    const date = new Date(isoString);
+    const hours = date.getHours().toString().padStart(2, '0');
+    const minutes = date.getMinutes().toString().padStart(2, '0');
+    return `${hours}:${minutes}`;
+  };
+
+  const parseDateTime = (dateStr, timeStr) => {
+    // Parsing formato DD/MM/YYYY e HH:MM
+    const dateParts = dateStr.split('/');
+    if (dateParts.length !== 3) return null;
+    const [day, month, year] = dateParts;
+    const timeParts = timeStr.split(':');
+    if (timeParts.length !== 2) return null;
+    const [hours, minutes] = timeParts;
+    const date = new Date(year, month - 1, day, hours, minutes);
+    if (isNaN(date.getTime())) return null;
+    return date.toISOString();
+  };
+
+  const [countdownDate, setCountdownDate] = useState(() => formatDateForInput(config?.countdown_end));
+  const [countdownTime, setCountdownTime] = useState(() => formatTimeForInput(config?.countdown_end));
+
+  const handleDateTimeChange = (newDate, newTime) => {
+    const isoString = parseDateTime(newDate, newTime);
+    if (isoString) {
+      handleConfigChange('countdown_end', isoString);
+    }
+  };
+
   useEffect(() => {
     fetchStats();
   }, []);
@@ -1457,6 +1511,16 @@ function AdminPanel({ aziende, setAziende, config, setConfig }) {
     const newConfig = { ...config, [key]: value };
     setConfig(newConfig);
     await supabase.from('config').update(newConfig).eq('id', 1);
+  };
+
+  const handleResetStats = async () => {
+    if (!confirm('Sei sicuro? Questa azione cancellerà TUTTI i voti!')) return;
+
+    // Cancella tutti i voti dal database
+    await supabase.from('voti').delete().neq('id', 0);
+
+    // Resetta le statistiche locali
+    setStats({ totale: 0, horeca: 0, appassionati: 0 });
   };
 
   return (
@@ -1549,13 +1613,35 @@ function AdminPanel({ aziende, setAziende, config, setConfig }) {
           </div>
           
           <div className="form-group">
-            <label>Fine Countdown (Data e Ora)</label>
-            <input
-              type="datetime-local"
-              className="form-input"
-              value={config?.countdown_end ? new Date(config.countdown_end).toISOString().slice(0, 16) : ''}
-              onChange={(e) => handleConfigChange('countdown_end', new Date(e.target.value).toISOString())}
-            />
+            <label>Fine Countdown</label>
+            <div style={{ display: 'flex', gap: 15, alignItems: 'center' }}>
+              <div style={{ flex: 1 }}>
+                <label style={{ fontSize: '0.85rem', color: 'var(--silver)', marginBottom: 5, display: 'block' }}>Data (GG/MM/AAAA)</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="DD/MM/YYYY"
+                  value={countdownDate}
+                  onChange={(e) => {
+                    setCountdownDate(e.target.value);
+                    handleDateTimeChange(e.target.value, countdownTime);
+                  }}
+                />
+              </div>
+              <div style={{ flex: 1 }}>
+                <label style={{ fontSize: '0.85rem', color: 'var(--silver)', marginBottom: 5, display: 'block' }}>Ora (HH:MM)</label>
+                <input
+                  type="text"
+                  className="form-input"
+                  placeholder="HH:MM"
+                  value={countdownTime}
+                  onChange={(e) => {
+                    setCountdownTime(e.target.value);
+                    handleDateTimeChange(countdownDate, e.target.value);
+                  }}
+                />
+              </div>
+            </div>
           </div>
           
           <div className="form-group">
@@ -1591,13 +1677,29 @@ function AdminPanel({ aziende, setAziende, config, setConfig }) {
             </div>
           </div>
           
-          <button 
-            className="btn-secondary" 
-            style={{ marginTop: 30 }}
-            onClick={fetchStats}
-          >
-            🔄 Aggiorna Statistiche
-          </button>
+          <div style={{ display: 'flex', gap: 15, marginTop: 30 }}>
+            <button
+              className="btn-secondary"
+              onClick={fetchStats}
+            >
+              🔄 Aggiorna Statistiche
+            </button>
+            <button
+              style={{
+                padding: '15px 25px',
+                background: '#e74c3c',
+                color: 'white',
+                border: 'none',
+                borderRadius: '12px',
+                cursor: 'pointer',
+                fontWeight: 600,
+                fontFamily: 'Outfit, sans-serif'
+              }}
+              onClick={handleResetStats}
+            >
+              🗑️ Azzera Statistiche
+            </button>
+          </div>
         </div>
       )}
     </div>
