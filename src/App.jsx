@@ -548,7 +548,7 @@ const styles = `
   }
   
   /* ==================== DASHBOARD ==================== */
-  .dashboard {
+  .classifica {
     min-height: 100vh;
     background: linear-gradient(135deg, var(--cream) 0%, #f5f0e8 100%);
     color: var(--charcoal);
@@ -556,18 +556,18 @@ const styles = `
     overflow: hidden;
   }
 
-  .dashboard-header {
+  .classifica-header {
     text-align: center;
     margin-bottom: 40px;
   }
 
-  .dashboard-header .logo {
+  .classifica-header .logo {
     max-width: 400px;
     height: auto;
     margin-bottom: 15px;
   }
 
-  .dashboard-header .subtitle {
+  .classifica-header .subtitle {
     font-size: 1.2rem;
     color: var(--olive);
     margin-top: 10px;
@@ -934,11 +934,11 @@ const styles = `
   
   /* Responsive */
   @media (max-width: 768px) {
-    .dashboard {
+    .classifica {
       padding: 20px;
     }
     
-    .dashboard-header .logo {
+    .classifica-header .logo {
       max-width: 280px;
     }
     
@@ -1075,7 +1075,7 @@ function VotingApp({ aziende, config }) {
           <div className="thank-you">
             <div className="icon">🎉</div>
             <h2>Grazie!</h2>
-            <p>Il tuo voto è stato registrato con successo. I risultati sono visualizzabili real time sulla dashboard e quelli definitivi saranno annunciati al termine dell'evento.</p>
+            <p>Il tuo voto è stato registrato con successo. I risultati sono visualizzabili real time sulla classifica e quelli definitivi saranno annunciati al termine dell'evento.</p>
           </div>
         </div>
       </div>
@@ -1159,11 +1159,7 @@ function VotingApp({ aziende, config }) {
                     onClick={() => handleCompanyClick(azienda)}
                   >
                     <div className="company-logo">
-                      {azienda.logo_url ? (
-                        <img src={azienda.logo_url} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 10 }} />
-                      ) : (
-                        azienda.nome.substring(0, 2).toUpperCase()
-                      )}
+                      <img src={azienda.logo_url || '/alberello.png'} alt="" style={{ width: '100%', height: '100%', objectFit: 'contain', borderRadius: 10 }} />
                     </div>
                     <div className="company-name">
                       <span className="company-name-text">{azienda.nome}</span>
@@ -1215,9 +1211,9 @@ function VotingApp({ aziende, config }) {
 }
 
 // ============================================================================
-// DASHBOARD COMPONENT
+// CLASSIFICA COMPONENT
 // ============================================================================
-function Dashboard({ config }) {
+function Classifica({ config }) {
   const [classificaHoreca, setClassificaHoreca] = useState([]);
   const [classificaAppassionati, setClassificaAppassionati] = useState([]);
   const [countdown, setCountdown] = useState({ hours: 0, minutes: 0, seconds: 0 });
@@ -1298,8 +1294,8 @@ function Dashboard({ config }) {
 
   if (votingEnded) {
     return (
-      <div className="dashboard">
-        <div className="dashboard-header">
+      <div className="classifica">
+        <div className="classifica-header">
           <img src="/logo_evoluzione.png" alt="EVOluzione" className="logo" />
           <div className="subtitle">Votazioni Concluse</div>
         </div>
@@ -1346,8 +1342,8 @@ function Dashboard({ config }) {
   }
 
   return (
-    <div className="dashboard">
-      <div className="dashboard-header">
+    <div className="classifica">
+      <div className="classifica-header">
         <img src="/logo_evoluzione.png" alt="EVOluzione" className="logo" />
         <div className="subtitle">Classifica Live</div>
       </div>
@@ -1710,7 +1706,7 @@ function AdminPanel({ aziende, setAziende, config, setConfig }) {
 // MAIN APP
 // ============================================================================
 export default function App() {
-  const [view, setView] = useState('vote'); // 'vote' | 'dashboard' | 'admin'
+  const [view, setView] = useState('vote'); // 'vote' | 'classifica' | 'admin'
   const [aziende, setAziende] = useState([]);
   const [config, setConfig] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -1719,7 +1715,7 @@ export default function App() {
   useEffect(() => {
     // Determina la view dall'URL
     const path = window.location.pathname;
-    if (path.includes('dashboard')) setView('dashboard');
+    if (path.includes('dashboard') || path.includes('classifica')) setView('classifica');
     else if (path.includes('admin')) {
       setView('admin');
       setIsAdminUrl(true);
@@ -1761,7 +1757,7 @@ export default function App() {
       <style>{styles}</style>
       <div className="app-container">
         {view === 'vote' && <VotingApp aziende={aziende} config={config} />}
-        {view === 'dashboard' && <Dashboard config={config} />}
+        {view === 'classifica' && <Classifica config={config} />}
         {view === 'admin' && <AdminPanel aziende={aziende} setAziende={setAziende} config={config} setConfig={setConfig} />}
         
         {/* Navigation */}
@@ -1769,8 +1765,8 @@ export default function App() {
           <button className={`nav-btn ${view === 'vote' ? 'active' : ''}`} onClick={() => setView('vote')}>
             Voto
           </button>
-          <button className={`nav-btn ${view === 'dashboard' ? 'active' : ''}`} onClick={() => setView('dashboard')}>
-            Dashboard
+          <button className={`nav-btn ${view === 'classifica' ? 'active' : ''}`} onClick={() => setView('classifica')}>
+            Classifica
           </button>
           {isAdminUrl && (
             <button className={`nav-btn ${view === 'admin' ? 'active' : ''}`} onClick={() => setView('admin')}>
