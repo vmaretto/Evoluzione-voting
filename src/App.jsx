@@ -12,12 +12,44 @@ const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
 const MOCK_MODE = true; // Metti false quando colleghi Supabase
 
 const mockAziende = [
-  { id: '1', nome: 'Azienda Demo 1', logo_url: null, attiva: true },
-  { id: '2', nome: 'Azienda Demo 2', logo_url: null, attiva: true },
-  { id: '3', nome: 'Azienda Demo 3', logo_url: null, attiva: true },
-  { id: '4', nome: 'Azienda Demo 4', logo_url: null, attiva: true },
-  { id: '5', nome: 'Azienda Demo 5', logo_url: null, attiva: true },
-  { id: '6', nome: 'Azienda Demo 6', logo_url: null, attiva: true },
+  { id: '1', nome: 'Abbraccio', regione: 'Toscana', attiva: true },
+  { id: '2', nome: 'Accademia Olearia', regione: 'Sardegna', attiva: true },
+  { id: '3', nome: 'Az. Agr. Marcoaldi Roberta', regione: 'Lazio', attiva: true },
+  { id: '4', nome: 'Az. Agr. Mazzeranghi Bernardo', regione: 'Lazio', attiva: true },
+  { id: '5', nome: 'Azienda Agraria Fratelli Caporali', regione: 'Umbria', attiva: true },
+  { id: '6', nome: 'Cerrosughero', regione: 'Lazio', attiva: true },
+  { id: '7', nome: 'Cinque Colli', regione: 'Sicilia', attiva: true },
+  { id: '8', nome: 'CM Centumbrie', regione: 'Umbria', attiva: true },
+  { id: '9', nome: 'Colli Etruschi', regione: 'Lazio', attiva: true },
+  { id: '10', nome: 'Diamante Verde', regione: 'Lazio', attiva: true },
+  { id: '11', nome: 'Fattoria Ambrosio 1938', regione: 'Campania', attiva: true },
+  { id: '12', nome: 'Frantoio di Sant\'Agata d\'Oneglia', regione: 'Liguria', attiva: true },
+  { id: '13', nome: 'Frantoio Franci', regione: 'Toscana', attiva: true },
+  { id: '14', nome: 'Frantoio Gaudenzi', regione: 'Umbria', attiva: true },
+  { id: '15', nome: 'Frantoio Oleario Bigucci', regione: 'Emilia-Romagna', attiva: true },
+  { id: '16', nome: 'Frantoio Romano', regione: 'Campania', attiva: true },
+  { id: '17', nome: 'Frantoio San Comaio', regione: 'Campania', attiva: true },
+  { id: '18', nome: 'I&P', regione: 'Lazio', attiva: true },
+  { id: '19', nome: 'KAIROS Cooperativa sociale ARL Onlus ETS', regione: 'Molise', attiva: true },
+  { id: '20', nome: 'La Goccia d\'Oro', regione: 'Sicilia', attiva: true },
+  { id: '21', nome: 'La Rosciola', regione: 'Lazio', attiva: true },
+  { id: '22', nome: 'LunaVera di Sebastiano Fadda', regione: 'Sardegna', attiva: true },
+  { id: '23', nome: 'Mandranova', regione: 'Sicilia', attiva: true },
+  { id: '24', nome: 'Marfuga', regione: 'Umbria', attiva: true },
+  { id: '25', nome: 'Marina Colonna - Colonna Olive Oil', regione: 'Molise', attiva: true },
+  { id: '26', nome: 'Mezzecrete', regione: 'Toscana', attiva: true },
+  { id: '27', nome: 'Mio Padre è un Albero', regione: 'Puglia', attiva: true },
+  { id: '28', nome: 'Molino7Cento', regione: 'Lazio', attiva: true },
+  { id: '29', nome: 'Oilivis, l\'oliva del Gargano', regione: 'Puglia', attiva: true },
+  { id: '30', nome: 'Olearia San Giorgio', regione: 'Calabria', attiva: true },
+  { id: '31', nome: 'Olio Evo Cappelli', regione: 'Lazio', attiva: true },
+  { id: '32', nome: 'Olio Traldi di Francesca Boni', regione: 'Lazio', attiva: true },
+  { id: '33', nome: 'Olivicola di Canino', regione: 'Lazio', attiva: true },
+  { id: '34', nome: 'Olivieri Società Agricola', regione: 'Puglia', attiva: true },
+  { id: '35', nome: 'Palazzo di Varignana', regione: 'Emilia-Romagna', attiva: true },
+  { id: '36', nome: 'PozzoSerpi', regione: 'Puglia', attiva: true },
+  { id: '37', nome: 'Solatìa Farm', regione: 'Lazio', attiva: true },
+  { id: '38', nome: 'Tenute Librandi Pasquale', regione: 'Calabria', attiva: true },
 ];
 
 const mockConfig = {
@@ -25,6 +57,18 @@ const mockConfig = {
   voting_open: true,
   event_name: 'EVOluzione',
 };
+
+// Mock voti per testing statistiche
+const mockVoti = [
+  { id: 1, categoria: 'horeca', email: 'test1@test.com', azienda_1: '1', azienda_2: '13', azienda_3: '24' },
+  { id: 2, categoria: 'horeca', email: 'test2@test.com', azienda_1: '13', azienda_2: '1', azienda_3: '26' },
+  { id: 3, categoria: 'horeca', email: 'test3@test.com', azienda_1: '24', azienda_2: '13', azienda_3: '1' },
+  { id: 4, categoria: 'appassionato', email: 'test4@test.com', azienda_1: '26', azienda_2: '24', azienda_3: '13' },
+  { id: 5, categoria: 'appassionato', email: 'test5@test.com', azienda_1: '13', azienda_2: '26', azienda_3: '24' },
+  { id: 6, categoria: 'appassionato', email: 'test6@test.com', azienda_1: '24', azienda_2: '13', azienda_3: '1' },
+  { id: 7, categoria: 'horeca', email: 'test7@test.com', azienda_1: '1', azienda_2: '24', azienda_3: '13' },
+  { id: 8, categoria: 'appassionato', email: 'test8@test.com', azienda_1: '26', azienda_2: '1', azienda_3: '13' },
+];
 
 // ============================================================================
 // SUPABASE CLIENT (semplificato)
@@ -35,7 +79,7 @@ const supabase = {
       if (MOCK_MODE) {
         if (table === 'aziende') return { data: mockAziende, error: null };
         if (table === 'config') return { data: [mockConfig], error: null };
-        if (table === 'voti') return { data: [], error: null };
+        if (table === 'voti') return { data: mockVoti, error: null };
         return { data: [], error: null };
       }
       const res = await fetch(`${SUPABASE_URL}/rest/v1/${table}?select=${columns}`, {
@@ -348,7 +392,20 @@ const styles = `
   
   .company-name {
     flex: 1;
-    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .company-name-text {
+    font-weight: 600;
+    color: var(--charcoal);
+  }
+
+  .company-region {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--silver);
   }
   
   .selection-badge {
@@ -480,12 +537,12 @@ const styles = `
   /* ==================== DASHBOARD ==================== */
   .dashboard {
     min-height: 100vh;
-    background: linear-gradient(135deg, var(--charcoal) 0%, #1a1a1a 100%);
-    color: white;
+    background: linear-gradient(135deg, var(--cream) 0%, #f5f0e8 100%);
+    color: var(--charcoal);
     padding: 40px;
     overflow: hidden;
   }
-  
+
   .dashboard-header {
     text-align: center;
     margin-bottom: 40px;
@@ -499,37 +556,38 @@ const styles = `
 
   .dashboard-header .subtitle {
     font-size: 1.2rem;
-    color: var(--sage);
+    color: var(--olive);
     margin-top: 10px;
     letter-spacing: 2px;
     text-transform: uppercase;
   }
-  
+
   .countdown-container {
     text-align: center;
     margin-bottom: 50px;
   }
-  
+
   .countdown {
     display: inline-flex;
     gap: 20px;
-    background: rgba(201, 181, 53, 0.1);
+    background: white;
     padding: 25px 50px;
     border-radius: 20px;
-    border: 1px solid rgba(201, 181, 53, 0.3);
+    border: 2px solid var(--sage);
+    box-shadow: 0 5px 20px rgba(122, 130, 49, 0.1);
   }
-  
+
   .countdown-unit {
     text-align: center;
   }
-  
+
   .countdown-value {
     font-family: 'Playfair Display', serif;
     font-size: 4rem;
-    color: var(--mustard);
+    color: var(--olive);
     line-height: 1;
   }
-  
+
   .countdown-label {
     font-size: 0.9rem;
     color: var(--silver);
@@ -537,15 +595,15 @@ const styles = `
     text-transform: uppercase;
     letter-spacing: 2px;
   }
-  
+
   .countdown-separator {
     font-size: 3rem;
-    color: var(--mustard);
+    color: var(--olive);
     opacity: 0.5;
     align-self: flex-start;
     padding-top: 10px;
   }
-  
+
   .rankings-container {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -553,18 +611,19 @@ const styles = `
     max-width: 1400px;
     margin: 0 auto;
   }
-  
+
   .ranking-column {
-    background: rgba(255, 255, 255, 0.03);
+    background: white;
     border-radius: 25px;
     padding: 30px;
-    border: 1px solid rgba(201, 181, 53, 0.2);
+    border: 2px solid var(--sage);
+    box-shadow: 0 5px 20px rgba(122, 130, 49, 0.1);
   }
-  
+
   .ranking-title {
     font-family: 'Playfair Display', serif;
     font-size: 1.8rem;
-    color: var(--mustard);
+    color: var(--olive);
     text-align: center;
     margin-bottom: 25px;
     display: flex;
@@ -572,78 +631,110 @@ const styles = `
     justify-content: center;
     gap: 15px;
   }
-  
+
   .ranking-title .emoji {
     font-size: 2rem;
   }
-  
+
   .ranking-list {
     display: flex;
     flex-direction: column;
     gap: 12px;
   }
-  
+
   .ranking-item {
     display: flex;
     align-items: center;
     padding: 18px 20px;
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--cream);
     border-radius: 15px;
     transition: all 0.3s;
   }
-  
+
   .ranking-item:hover {
-    background: rgba(201, 181, 53, 0.1);
+    background: rgba(122, 130, 49, 0.1);
     transform: translateX(10px);
   }
-  
+
   .ranking-item.top-1 {
-    background: linear-gradient(135deg, rgba(201, 181, 53, 0.3) 0%, rgba(201, 181, 53, 0.1) 100%);
-    border: 1px solid var(--mustard);
+    background: linear-gradient(135deg, var(--olive) 0%, var(--olive-dark) 100%);
+    border: none;
   }
-  
+
+  .ranking-item.top-1 .ranking-name,
+  .ranking-item.top-1 .ranking-name-text {
+    color: white;
+  }
+
+  .ranking-item.top-1 .ranking-region {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
   .ranking-item.top-2 {
-    background: linear-gradient(135deg, rgba(192, 192, 192, 0.2) 0%, rgba(192, 192, 192, 0.05) 100%);
-    border: 1px solid rgba(192, 192, 192, 0.5);
+    background: linear-gradient(135deg, var(--sage) 0%, #b8bda0 100%);
+    border: none;
   }
-  
+
+  .ranking-item.top-2 .ranking-name,
+  .ranking-item.top-2 .ranking-name-text {
+    color: var(--charcoal);
+  }
+
   .ranking-item.top-3 {
-    background: linear-gradient(135deg, rgba(205, 127, 50, 0.2) 0%, rgba(205, 127, 50, 0.05) 100%);
-    border: 1px solid rgba(205, 127, 50, 0.5);
+    background: linear-gradient(135deg, #d4c9a8 0%, #c5b896 100%);
+    border: none;
   }
-  
+
+  .ranking-item.top-3 .ranking-name,
+  .ranking-item.top-3 .ranking-name-text {
+    color: var(--charcoal);
+  }
+
   .ranking-position {
     font-family: 'Playfair Display', serif;
     font-size: 1.8rem;
     width: 50px;
     text-align: center;
-    color: var(--mustard);
+    color: var(--olive);
   }
-  
+
   .ranking-item.top-1 .ranking-position { color: var(--mustard); }
-  .ranking-item.top-2 .ranking-position { color: #C0C0C0; }
-  .ranking-item.top-3 .ranking-position { color: #CD7F32; }
-  
+  .ranking-item.top-2 .ranking-position { color: var(--charcoal); }
+  .ranking-item.top-3 .ranking-position { color: #8B6914; }
+
   .ranking-name {
     flex: 1;
-    font-size: 1.3rem;
-    font-weight: 500;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
     padding-left: 15px;
   }
-  
+
+  .ranking-name-text {
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--charcoal);
+  }
+
+  .ranking-region {
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--silver);
+  }
+
   .ranking-medal {
     font-size: 2rem;
   }
-  
+
   .voting-closed {
     text-align: center;
     padding: 60px;
   }
-  
+
   .voting-closed h2 {
     font-family: 'Playfair Display', serif;
     font-size: 3rem;
-    color: var(--mustard);
+    color: var(--olive);
     margin-bottom: 20px;
   }
   
@@ -948,7 +1039,7 @@ function VotingApp({ aziende, config }) {
     return (
       <div className="voting-app">
         <div className="voting-header">
-          <img src="/EVOluzione_logo.png" alt="EVOluzione" className="logo" />
+          <img src="/logo_evoluzione.png" alt="EVOluzione" className="logo" />
         </div>
         <div className="voting-card">
           <div className="thank-you">
@@ -965,13 +1056,13 @@ function VotingApp({ aziende, config }) {
     return (
       <div className="voting-app">
         <div className="voting-header">
-          <img src="/EVOluzione_logo.png" alt="EVOluzione" className="logo" />
+          <img src="/logo_evoluzione.png" alt="EVOluzione" className="logo" />
         </div>
         <div className="voting-card animate-in">
           <div className="thank-you">
             <div className="icon">🎉</div>
             <h2>Grazie!</h2>
-            <p>Il tuo voto è stato registrato con successo. I risultati saranno annunciati alla fine dell'evento.</p>
+            <p>Il tuo voto è stato registrato con successo. I risultati sono visualizzabili real time sulla dashboard e quelli definitivi saranno annunciati al termine dell'evento.</p>
           </div>
         </div>
       </div>
@@ -981,13 +1072,13 @@ function VotingApp({ aziende, config }) {
   return (
     <div className="voting-app">
       <div className="voting-header">
-        <img src="/EVOluzione_logo.png" alt="EVOluzione" className="logo" />
+        <img src="/logo_evoluzione.png" alt="EVOluzione" className="logo" />
       </div>
 
       <div className="step-indicator">
-        {[1, 2, 3, 4].map(s => (
-          <div 
-            key={s} 
+        {[1, 2, 3].map(s => (
+          <div
+            key={s}
             className={`step-dot ${step === s ? 'active' : ''} ${step > s ? 'completed' : ''}`}
           />
         ))}
@@ -1044,7 +1135,7 @@ function VotingApp({ aziende, config }) {
         {step === 3 && (
           <>
             <h3 className="step-title">Le tue preferenze</h3>
-            <p className="step-subtitle">Seleziona 3 aziende in ordine di preferenza</p>
+            <p className="step-subtitle">Seleziona fino a 3 aziende in ordine di preferenza</p>
             <div className="company-list">
               {aziende.filter(a => a.attiva !== false).map(azienda => {
                 const selIndex = getSelectionIndex(azienda.id);
@@ -1061,7 +1152,10 @@ function VotingApp({ aziende, config }) {
                         azienda.nome.substring(0, 2).toUpperCase()
                       )}
                     </div>
-                    <div className="company-name">{azienda.nome}</div>
+                    <div className="company-name">
+                      <span className="company-name-text">{azienda.nome}</span>
+                      {azienda.regione && <span className="company-region">{azienda.regione}</span>}
+                    </div>
                     {selIndex !== -1 && (
                       <div className={`selection-badge badge-${selIndex + 1}`}>
                         {selIndex + 1}°
@@ -1087,14 +1181,14 @@ function VotingApp({ aziende, config }) {
               </div>
             )}
 
-            <button 
-              className="btn-primary" 
-              disabled={selections.filter(s => s !== null).length < 3}
-              onClick={() => setStep(4)}
+            <button
+              className="btn-primary"
+              disabled={selections.filter(s => s !== null).length < 1}
+              onClick={handleSubmit}
             >
-              {selections.filter(s => s !== null).length < 3 
-                ? `Seleziona ancora ${3 - selections.filter(s => s !== null).length}` 
-                : 'Conferma scelte'}
+              {selections.filter(s => s !== null).length < 1
+                ? 'Seleziona almeno 1 azienda'
+                : `Conferma scelte (${selections.filter(s => s !== null).length}/3)`}
             </button>
             <button className="btn-secondary" onClick={() => setStep(2)}>
               Indietro
@@ -1102,40 +1196,6 @@ function VotingApp({ aziende, config }) {
           </>
         )}
 
-        {step === 4 && (
-          <>
-            <h3 className="step-title">Conferma il voto</h3>
-            <p className="step-subtitle">Verifica le tue scelte prima di confermare</p>
-            
-            <div style={{ background: 'var(--cream)', borderRadius: 12, padding: 20, marginBottom: 20 }}>
-              <p style={{ fontSize: '0.9rem', color: 'var(--silver)', marginBottom: 10 }}>
-                Categoria: <strong style={{ color: 'var(--olive)' }}>
-                  {categoria === 'horeca' ? 'Operatore Ho.Re.Ca.' : 'Appassionato'}
-                </strong>
-              </p>
-              <p style={{ fontSize: '0.9rem', color: 'var(--silver)', marginBottom: 15 }}>
-                Email: <strong style={{ color: 'var(--olive)' }}>{email}</strong>
-              </p>
-              
-              {selections.map((sel, idx) => sel && (
-                <div key={idx} className="selection-row" style={{ background: 'white', borderRadius: 8, padding: 12, marginBottom: 8 }}>
-                  <div className={`selection-badge badge-${idx + 1}`} style={{ width: 30, height: 30, fontSize: '0.8rem' }}>
-                    {idx + 1}°
-                  </div>
-                  <span style={{ fontWeight: 500 }}>{sel.nome}</span>
-                  <span className="points">{3 - idx} pt</span>
-                </div>
-              ))}
-            </div>
-
-            <button className="btn-primary" onClick={handleSubmit}>
-              ✓ Conferma Voto
-            </button>
-            <button className="btn-secondary" onClick={() => setStep(3)}>
-              Modifica scelte
-            </button>
-          </>
-        )}
       </div>
     </div>
   );
@@ -1227,7 +1287,7 @@ function Dashboard({ config }) {
     return (
       <div className="dashboard">
         <div className="dashboard-header">
-          <img src="/EVOluzione_logo_verde.png" alt="EVOluzione" className="logo" />
+          <img src="/logo_evoluzione.png" alt="EVOluzione" className="logo" />
           <div className="subtitle">Votazioni Concluse</div>
         </div>
         
@@ -1241,23 +1301,29 @@ function Dashboard({ config }) {
               <span className="emoji">🍽️</span>
               Premio Ho.Re.Ca.
             </h3>
-            {classificaHoreca.slice(0, 1).map((azienda, idx) => (
-              <div key={azienda.id} className={`ranking-item top-1 pulse`}>
+            {classificaHoreca.slice(0, 1).map((azienda) => (
+              <div key={azienda.id} className="ranking-item top-1 pulse">
                 <div className="ranking-position">🏆</div>
-                <div className="ranking-name">{azienda.nome}</div>
+                <div className="ranking-name">
+                  <span className="ranking-name-text">{azienda.nome}</span>
+                  {azienda.regione && <span className="ranking-region">{azienda.regione}</span>}
+                </div>
               </div>
             ))}
           </div>
-          
+
           <div className="ranking-column">
             <h3 className="ranking-title">
               <span className="emoji">❤️</span>
               Premio Appassionati
             </h3>
-            {classificaAppassionati.slice(0, 1).map((azienda, idx) => (
-              <div key={azienda.id} className={`ranking-item top-1 pulse`}>
+            {classificaAppassionati.slice(0, 1).map((azienda) => (
+              <div key={azienda.id} className="ranking-item top-1 pulse">
                 <div className="ranking-position">🏆</div>
-                <div className="ranking-name">{azienda.nome}</div>
+                <div className="ranking-name">
+                  <span className="ranking-name-text">{azienda.nome}</span>
+                  {azienda.regione && <span className="ranking-region">{azienda.regione}</span>}
+                </div>
               </div>
             ))}
           </div>
@@ -1269,8 +1335,8 @@ function Dashboard({ config }) {
   return (
     <div className="dashboard">
       <div className="dashboard-header">
-        <img src="/EVOluzione_logo_verde.png" alt="EVOluzione" className="logo" />
-        <div className="subtitle">Vota il tuo artista preferito</div>
+        <img src="/logo_evoluzione.png" alt="EVOluzione" className="logo" />
+        <div className="subtitle">Classifica Live</div>
       </div>
       
       <div className="countdown-container">
@@ -1299,26 +1365,32 @@ function Dashboard({ config }) {
             Classifica Ho.Re.Ca.
           </h3>
           <div className="ranking-list">
-            {classificaHoreca.map((azienda, idx) => (
+            {classificaHoreca.slice(0, 10).map((azienda, idx) => (
               <div key={azienda.id} className={`ranking-item ${getTopClass(idx)}`}>
                 <div className="ranking-position">{idx + 1}</div>
-                <div className="ranking-name">{azienda.nome}</div>
+                <div className="ranking-name">
+                  <span className="ranking-name-text">{azienda.nome}</span>
+                  {azienda.regione && <span className="ranking-region">{azienda.regione}</span>}
+                </div>
                 <div className="ranking-medal">{getMedal(idx)}</div>
               </div>
             ))}
           </div>
         </div>
-        
+
         <div className="ranking-column">
           <h3 className="ranking-title">
             <span className="emoji">❤️</span>
             Classifica Appassionati
           </h3>
           <div className="ranking-list">
-            {classificaAppassionati.map((azienda, idx) => (
+            {classificaAppassionati.slice(0, 10).map((azienda, idx) => (
               <div key={azienda.id} className={`ranking-item ${getTopClass(idx)}`}>
                 <div className="ranking-position">{idx + 1}</div>
-                <div className="ranking-name">{azienda.nome}</div>
+                <div className="ranking-name">
+                  <span className="ranking-name-text">{azienda.nome}</span>
+                  {azienda.regione && <span className="ranking-region">{azienda.regione}</span>}
+                </div>
                 <div className="ranking-medal">{getMedal(idx)}</div>
               </div>
             ))}
@@ -1540,14 +1612,18 @@ export default function App() {
   const [aziende, setAziende] = useState([]);
   const [config, setConfig] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isAdminUrl, setIsAdminUrl] = useState(false);
 
   useEffect(() => {
     // Determina la view dall'URL
     const path = window.location.pathname;
     if (path.includes('dashboard')) setView('dashboard');
-    else if (path.includes('admin')) setView('admin');
+    else if (path.includes('admin')) {
+      setView('admin');
+      setIsAdminUrl(true);
+    }
     else setView('vote');
-    
+
     // Carica dati iniziali
     loadData();
   }, []);
@@ -1586,17 +1662,19 @@ export default function App() {
         {view === 'dashboard' && <Dashboard config={config} />}
         {view === 'admin' && <AdminPanel aziende={aziende} setAziende={setAziende} config={config} setConfig={setConfig} />}
         
-        {/* Navigation (solo per development/testing) */}
+        {/* Navigation */}
         <div className="app-nav">
           <button className={`nav-btn ${view === 'vote' ? 'active' : ''}`} onClick={() => setView('vote')}>
-            📱 Voto
+            Voto
           </button>
           <button className={`nav-btn ${view === 'dashboard' ? 'active' : ''}`} onClick={() => setView('dashboard')}>
-            📺 Dashboard
+            Dashboard
           </button>
-          <button className={`nav-btn ${view === 'admin' ? 'active' : ''}`} onClick={() => setView('admin')}>
-            ⚙️ Admin
-          </button>
+          {isAdminUrl && (
+            <button className={`nav-btn ${view === 'admin' ? 'active' : ''}`} onClick={() => setView('admin')}>
+              Admin
+            </button>
+          )}
         </div>
       </div>
     </>
