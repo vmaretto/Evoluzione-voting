@@ -739,6 +739,13 @@ const styles = `
     font-size: 2rem;
   }
 
+  .ranking-empty {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--silver);
+    font-style: italic;
+  }
+
   .voting-closed {
     text-align: center;
     padding: 60px;
@@ -903,7 +910,7 @@ const styles = `
   /* Navigation */
   .app-nav {
     position: fixed;
-    bottom: 20px;
+    bottom: 55px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
@@ -931,7 +938,41 @@ const styles = `
     background: var(--olive);
     color: white;
   }
-  
+
+  /* Footer */
+  .app-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: var(--charcoal);
+    color: var(--cream);
+    text-align: center;
+    padding: 12px 20px;
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    z-index: 99;
+  }
+
+  .app-footer a {
+    color: var(--sage);
+    text-decoration: none;
+    transition: color 0.3s;
+  }
+
+  .app-footer a:hover {
+    color: var(--mustard);
+    text-decoration: underline;
+  }
+
+  .footer-separator {
+    color: var(--silver);
+  }
+
   /* Responsive */
   @media (max-width: 768px) {
     .classifica {
@@ -1213,9 +1254,13 @@ function VotingApp({ aziende, config }) {
 // ============================================================================
 // CLASSIFICA COMPONENT
 // ============================================================================
+const MIN_VOTI_CLASSIFICA = 3;
+
 function Classifica({ config }) {
   const [classificaHoreca, setClassificaHoreca] = useState([]);
   const [classificaAppassionati, setClassificaAppassionati] = useState([]);
+  const [numVotiHoreca, setNumVotiHoreca] = useState(0);
+  const [numVotiAppassionati, setNumVotiAppassionati] = useState(0);
   const [countdown, setCountdown] = useState({ hours: 0, minutes: 0, seconds: 0 });
   const [votingEnded, setVotingEnded] = useState(false);
 
@@ -1223,23 +1268,29 @@ function Classifica({ config }) {
     // In produzione userai una RPC function o una view
     const { data: voti } = await supabase.from('voti').select('*');
     const { data: aziende } = await supabase.from('aziende').select('*');
-    
+
+    // Conta voti per categoria
+    const votiHoreca = voti?.filter(v => v.categoria === 'horeca').length || 0;
+    const votiAppassionati = voti?.filter(v => v.categoria === 'appassionato').length || 0;
+    setNumVotiHoreca(votiHoreca);
+    setNumVotiAppassionati(votiAppassionati);
+
     // Calcola punteggi
     const calcola = (cat) => {
       const punteggi = {};
       aziende?.forEach(a => { punteggi[a.id] = { ...a, punteggio: 0 }; });
-      
+
       voti?.filter(v => v.categoria === cat).forEach(v => {
         if (v.azienda_1 && punteggi[v.azienda_1]) punteggi[v.azienda_1].punteggio += 3;
         if (v.azienda_2 && punteggi[v.azienda_2]) punteggi[v.azienda_2].punteggio += 2;
         if (v.azienda_3 && punteggi[v.azienda_3]) punteggi[v.azienda_3].punteggio += 1;
       });
-      
+
       return Object.values(punteggi)
         .filter(a => a.attiva !== false)
         .sort((a, b) => b.punteggio - a.punteggio);
     };
-    
+
     setClassificaHoreca(calcola('horeca'));
     setClassificaAppassionati(calcola('appassionato'));
   }, []);
@@ -1373,18 +1424,24 @@ function Classifica({ config }) {
             <span className="emoji">🍽️</span>
             Classifica Ho.Re.Ca.
           </h3>
-          <div className="ranking-list">
-            {classificaHoreca.slice(0, 10).map((azienda, idx) => (
-              <div key={azienda.id} className={`ranking-item ${getTopClass(idx)}`}>
-                <div className="ranking-position">{idx + 1}</div>
-                <div className="ranking-name">
-                  <span className="ranking-name-text">{azienda.nome}</span>
-                  {azienda.regione && <span className="ranking-region">{azienda.regione}</span>}
+          {numVotiHoreca >= MIN_VOTI_CLASSIFICA ? (
+            <div className="ranking-list">
+              {classificaHoreca.slice(0, 10).map((azienda, idx) => (
+                <div key={azienda.id} className={`ranking-item ${getTopClass(idx)}`}>
+                  <div className="ranking-position">{idx + 1}</div>
+                  <div className="ranking-name">
+                    <span className="ranking-name-text">{azienda.nome}</span>
+                    {azienda.regione && <span className="ranking-region">{azienda.regione}</span>}
+                  </div>
+                  <div className="ranking-medal">{getMedal(idx)}</div>
                 </div>
-                <div className="ranking-medal">{getMedal(idx)}</div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="ranking-empty">
+              <p>In attesa dei primi voti...</p>
+            </div>
+          )}
         </div>
 
         <div className="ranking-column">
@@ -1392,18 +1449,24 @@ function Classifica({ config }) {
             <span className="emoji">❤️</span>
             Classifica Appassionati
           </h3>
-          <div className="ranking-list">
-            {classificaAppassionati.slice(0, 10).map((azienda, idx) => (
-              <div key={azienda.id} className={`ranking-item ${getTopClass(idx)}`}>
-                <div className="ranking-position">{idx + 1}</div>
-                <div className="ranking-name">
-                  <span className="ranking-name-text">{azienda.nome}</span>
-                  {azienda.regione && <span className="ranking-region">{azienda.regione}</span>}
+          {numVotiAppassionati >= MIN_VOTI_CLASSIFICA ? (
+            <div className="ranking-list">
+              {classificaAppassionati.slice(0, 10).map((azienda, idx) => (
+                <div key={azienda.id} className={`ranking-item ${getTopClass(idx)}`}>
+                  <div className="ranking-position">{idx + 1}</div>
+                  <div className="ranking-name">
+                    <span className="ranking-name-text">{azienda.nome}</span>
+                    {azienda.regione && <span className="ranking-region">{azienda.regione}</span>}
+                  </div>
+                  <div className="ranking-medal">{getMedal(idx)}</div>
                 </div>
-                <div className="ranking-medal">{getMedal(idx)}</div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          ) : (
+            <div className="ranking-empty">
+              <p>In attesa dei primi voti...</p>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -1774,6 +1837,15 @@ export default function App() {
             </button>
           )}
         </div>
+
+        {/* Footer */}
+        <footer className="app-footer">
+          <span>© 2026 Evoluzione</span>
+          <span className="footer-separator">-</span>
+          <a href="https://www.evoluzioneolio.com/privacy-policy" target="_blank" rel="noopener noreferrer">Privacy Policy</a>
+          <span className="footer-separator">-</span>
+          <a href="https://www.evoluzioneolio.com/cookie-policy" target="_blank" rel="noopener noreferrer">Cookie Policy</a>
+        </footer>
       </div>
     </>
   );
