@@ -1486,7 +1486,7 @@ function Classifica({ config }) {
         </div>
         
         <div className="voting-closed">
-          <h2>🏆 I Vincitori</h2>
+          <h2>🏆 Il Podio</h2>
         </div>
         
         <div className="rankings-container">
@@ -1495,9 +1495,9 @@ function Classifica({ config }) {
               <span className="emoji">🍽️</span>
               Premio Ho.Re.Ca.
             </h3>
-            {classificaHoreca.slice(0, 1).map((azienda) => (
-              <div key={azienda.id} className="ranking-item top-1 pulse">
-                <div className="ranking-position">🏆</div>
+            {classificaHoreca.slice(0, 3).map((azienda, index) => (
+              <div key={azienda.id} className={`ranking-item ${getTopClass(index)} ${index === 0 ? 'pulse' : ''}`}>
+                <div className="ranking-position">{index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉'}</div>
                 <div className="ranking-name">
                   <span className="ranking-name-text">{azienda.nome}</span>
                   {azienda.regione && <span className="ranking-region">{azienda.regione}</span>}
@@ -1511,9 +1511,9 @@ function Classifica({ config }) {
               <span className="emoji">❤️</span>
               Premio Appassionati
             </h3>
-            {classificaAppassionati.slice(0, 1).map((azienda) => (
-              <div key={azienda.id} className="ranking-item top-1 pulse">
-                <div className="ranking-position">🏆</div>
+            {classificaAppassionati.slice(0, 3).map((azienda, index) => (
+              <div key={azienda.id} className={`ranking-item ${getTopClass(index)} ${index === 0 ? 'pulse' : ''}`}>
+                <div className="ranking-position">{index === 0 ? '🥇' : index === 1 ? '🥈' : '🥉'}</div>
                 <div className="ranking-name">
                   <span className="ranking-name-text">{azienda.nome}</span>
                   {azienda.regione && <span className="ranking-region">{azienda.regione}</span>}
