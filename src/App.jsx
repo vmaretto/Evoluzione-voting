@@ -1,15 +1,15 @@
 import { useState, useEffect, useCallback } from 'react';
 
 // ============================================================================
-// CONFIGURAZIONE SUPABASE - Sostituire con le tue credenziali
+// CONFIGURAZIONE SUPABASE
 // ============================================================================
-const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
-const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
+const SUPABASE_URL = 'https://pwhqkdivgumrsubpinrv.supabase.co';
+const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB3aHFrZGl2Z3VtcnN1YnBpbnJ2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQ1NjQzNjQsImV4cCI6MjA4MDE0MDM2NH0.CTVRq2k9-Aw9jIcREcVmEKphoCyuDU-IzERqxNTo_rY';
 
 // ============================================================================
 // MOCK DATA - Per sviluppo senza Supabase
 // ============================================================================
-const MOCK_MODE = true; // Metti false quando colleghi Supabase
+const MOCK_MODE = false; // Supabase configurato
 
 const mockAziende = [
   { id: '1', nome: 'Abbraccio', regione: 'Toscana', attiva: true },
