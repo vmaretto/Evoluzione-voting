@@ -104,7 +104,7 @@ const supabase = {
       });
       return { data: await res.json(), error: null };
     },
-    update: async (data) => ({
+    update: (data) => ({
       eq: async (col, val) => {
         if (MOCK_MODE) {
           console.log('Mock update:', table, data, col, val);
@@ -1710,10 +1710,20 @@ function AdminPanel({ aziende, setAziende, config, setConfig }) {
 
   const saveConfig = async () => {
     setConfigSaving(true);
-    await supabase.from('config').update(config).eq('id', 1);
+    try {
+      const { error } = await supabase.from('config').update(config).eq('id', 1);
+      if (error) {
+        console.error('Errore salvataggio config:', error);
+        alert('Errore nel salvataggio: ' + JSON.stringify(error));
+      } else {
+        setConfigSaved(true);
+        setTimeout(() => setConfigSaved(false), 3000);
+      }
+    } catch (err) {
+      console.error('Errore:', err);
+      alert('Errore nel salvataggio');
+    }
     setConfigSaving(false);
-    setConfigSaved(true);
-    setTimeout(() => setConfigSaved(false), 3000); // Nasconde "Salvato" dopo 3 secondi
   };
 
   const handleResetStats = async () => {
