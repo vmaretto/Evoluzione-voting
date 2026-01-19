@@ -1616,6 +1616,8 @@ function AdminPanel({ aziende, setAziende, config, setConfig }) {
   const [editingId, setEditingId] = useState(null);
   const [editingName, setEditingName] = useState('');
   const [stats, setStats] = useState({ totale: 0, horeca: 0, appassionati: 0 });
+  const [configSaved, setConfigSaved] = useState(false);
+  const [configSaving, setConfigSaving] = useState(false);
 
   // Funzioni helper per formattare data/ora
   const formatDateForInput = (isoString) => {
@@ -1700,10 +1702,18 @@ function AdminPanel({ aziende, setAziende, config, setConfig }) {
     setEditingName('');
   };
 
-  const handleConfigChange = async (key, value) => {
+  const handleConfigChange = (key, value) => {
     const newConfig = { ...config, [key]: value };
     setConfig(newConfig);
-    await supabase.from('config').update(newConfig).eq('id', 1);
+    setConfigSaved(false); // Indica che ci sono modifiche non salvate
+  };
+
+  const saveConfig = async () => {
+    setConfigSaving(true);
+    await supabase.from('config').update(config).eq('id', 1);
+    setConfigSaving(false);
+    setConfigSaved(true);
+    setTimeout(() => setConfigSaved(false), 3000); // Nasconde "Salvato" dopo 3 secondi
   };
 
   const handleResetStats = async () => {
@@ -1847,6 +1857,31 @@ function AdminPanel({ aziende, setAziende, config, setConfig }) {
               />
               Votazioni Aperte
             </label>
+          </div>
+
+          <div style={{ marginTop: 30, display: 'flex', alignItems: 'center', gap: 15 }}>
+            <button
+              onClick={saveConfig}
+              disabled={configSaving}
+              style={{
+                background: 'var(--olive)',
+                color: 'white',
+                border: 'none',
+                padding: '12px 30px',
+                borderRadius: 8,
+                fontSize: '1rem',
+                fontWeight: 600,
+                cursor: configSaving ? 'wait' : 'pointer',
+                opacity: configSaving ? 0.7 : 1
+              }}
+            >
+              {configSaving ? 'Salvataggio...' : '💾 Salva Configurazione'}
+            </button>
+            {configSaved && (
+              <span style={{ color: 'green', fontWeight: 600 }}>
+                ✓ Salvato!
+              </span>
+            )}
           </div>
         </div>
       )}
