@@ -1921,12 +1921,22 @@ export default function App() {
 
     // Carica dati iniziali
     loadData();
+
+    // Polling per sincronizzazione config ogni 5 secondi
+    const interval = setInterval(async () => {
+      const { data: configData } = await supabase.from('config').select('*');
+      if (configData?.[0]) {
+        setConfig(configData[0]);
+      }
+    }, 5000);
+
+    return () => clearInterval(interval);
   }, []);
 
   const loadData = async () => {
     const { data: aziendeData } = await supabase.from('aziende').select('*');
     const { data: configData } = await supabase.from('config').select('*');
-    
+
     setAziende(aziendeData || mockAziende);
     setConfig(configData?.[0] || mockConfig);
     setLoading(false);
