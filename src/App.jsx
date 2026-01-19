@@ -1561,14 +1561,17 @@ function Classifica({ config }) {
           {numVotiHoreca >= MIN_VOTI_CLASSIFICA ? (
             <div className="ranking-list">
               {classificaHoreca.slice(0, 10).map((azienda, idx) => (
-                <div key={azienda.id} className={`ranking-item ${getTopClass(idx)}`}>
-                  <div className="ranking-position">{idx + 1}</div>
-                  <div className="ranking-name">
-                    <span className="ranking-name-text">{azienda.nome}</span>
-                    {azienda.regione && <span className="ranking-region">{azienda.regione}</span>}
+                // Mostra sempre top 3, posizioni 4-10 solo se hanno punteggio
+                (idx < 3 || azienda.punteggio > 0) && (
+                  <div key={azienda.id} className={`ranking-item ${getTopClass(idx)}`}>
+                    <div className="ranking-position">{idx + 1}</div>
+                    <div className="ranking-name">
+                      <span className="ranking-name-text">{azienda.nome}</span>
+                      {azienda.regione && <span className="ranking-region">{azienda.regione}</span>}
+                    </div>
+                    <div className="ranking-medal">{getMedal(idx)}</div>
                   </div>
-                  <div className="ranking-medal">{getMedal(idx)}</div>
-                </div>
+                )
               ))}
             </div>
           ) : (
@@ -1586,14 +1589,17 @@ function Classifica({ config }) {
           {numVotiAppassionati >= MIN_VOTI_CLASSIFICA ? (
             <div className="ranking-list">
               {classificaAppassionati.slice(0, 10).map((azienda, idx) => (
-                <div key={azienda.id} className={`ranking-item ${getTopClass(idx)}`}>
-                  <div className="ranking-position">{idx + 1}</div>
-                  <div className="ranking-name">
-                    <span className="ranking-name-text">{azienda.nome}</span>
-                    {azienda.regione && <span className="ranking-region">{azienda.regione}</span>}
+                // Mostra sempre top 3, posizioni 4-10 solo se hanno punteggio
+                (idx < 3 || azienda.punteggio > 0) && (
+                  <div key={azienda.id} className={`ranking-item ${getTopClass(idx)}`}>
+                    <div className="ranking-position">{idx + 1}</div>
+                    <div className="ranking-name">
+                      <span className="ranking-name-text">{azienda.nome}</span>
+                      {azienda.regione && <span className="ranking-region">{azienda.regione}</span>}
+                    </div>
+                    <div className="ranking-medal">{getMedal(idx)}</div>
                   </div>
-                  <div className="ranking-medal">{getMedal(idx)}</div>
-                </div>
+                )
               ))}
             </div>
           ) : (
